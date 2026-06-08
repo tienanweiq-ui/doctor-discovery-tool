@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>医生临床研究画像 · 在线工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-search {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-search:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-search:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-offline {
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+
+        .btn-offline:hover {
+            background: #e8e8e8;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .results {
+            display: none;
+            grid-column: 1 / -1;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .papers-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 0.95em;
+        }
+
+        .papers-table thead {
+            background: #f5f5f5;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .papers-table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .papers-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .papers-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .quality-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-weight: 600;
+            font-size: 0.85em;
+        }
+
+        .quality-high {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .quality-medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .quality-low {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .paper-detail {
+            background: #f9f9f9;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin: 15px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .paper-detail:hover {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .paper-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .paper-meta {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .paper-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .paper-abstract {
+            font-size: 0.9em;
+            color: #555;
+            line-height: 1.6;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .paper-abstract.show {
+            display: block;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .badge-first {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-corresponding {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            opacity: 0.9;
+        }
+
+        .disclaimer {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏥 医生临床研究画像</h1>
+            <p>基于 PubMed 论文数据的客观研究评估工具</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Doctor Research Profiling Tool</p>
+        </header>
+
+        <div class="content">
+            <!-- 搜索表单 -->
+            <div class="card">
+                <h2>📋 医生信息</h2>
+                <form id="searchForm">
+                    <div class="form-group">
+                        <label for="name">医生名字 (英文) *</label>
+                        <input type="text" id="name" name="name" placeholder="例: Zhang Wei" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="affiliation">工作单位 (关键词)</label>
+                        <input type="text" id="affiliation" name="affiliation" placeholder="例: Shanghai Sixth People's Hospital">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="max">论文数量限制</label>
+                        <select id="max" name="max">
+                            <option value="50">50 篇</option>
+                            <option value="100">100 篇</option>
+                            <option value="200">200 篇</option>
+                            <option value="300">300 篇</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="offline" name="offline">
+                        <label for="offline" style="margin: 0;">使用离线演示数据</label>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="btn-search" id="searchBtn">🔍 查询</button>
+                        <button type="button" class="btn-offline" onclick="demoSearch()">📚 演示</button>
+                    </div>
+                </form>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p style="margin-top: 15px; color: #666;">正在从 PubMed 采集数据...</p>
+                </div>
+
+                <div class="error" id="error"></div>
+
+                <div class="disclaimer">
+                    ⚠️ <strong>免责声明：</strong>
+                    本报告仅基于公开学术文献的客观信息整理，临床研究产出是医生诊疗能力的一个侧面，并不代表其全部水平；亦不构成对该医生的推荐或评价。
+                </div>
+            </div>
+
+            <!-- 搜索提示 -->
+            <div class="card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+                <h2>💡 使用提示</h2>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li><strong>医生名字：</strong>必填，建议使用英文拼音（如 Zhang Wei）</li>
+                    <li><strong>工作单位：</strong>可选，使用关键词帮助消歧（如 Shanghai、Sixth、Hospital）</li>
+                    <li><strong>离线演示：</strong>勾选后使用内置样例数据，无需网络</li>
+                    <li><strong>查询速度：</strong>实时从 PubMed 采集，首次查询需要几秒钟</li>
+                    <li><strong>摘要和期刊：</strong>显示每篇论文的摘要和期刊信息</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 结果展示 -->
+        <div class="results" id="results">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 id="resultTitle">📊 研究画像报告</h2>
+                    <button onclick="backToSearch()" style="padding: 8px 16px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">← 返回</button>
+                </div>
+
+                <div class="stat-box">
+                    <div class="stat-row">
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalPapers">-</div>
+                            <div class="stat-label">总论文数</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="clinicalPapers">-</div>
+                            <div class="stat-label">临床研究</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="avgQuality">-</div>
+                            <div class="stat-label">平均质量分</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="confidence">-</div>
+                            <div class="stat-label">坐诊置信度</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 15px 0; color: #333;">📄 代表性论文</h3>
+                <div id="papersList"></div>
+
+                <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+                    <p style="color: #666; font-size: 0.9em;">
+                        报告生成时间: <span id="generatedTime">-</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 医生临床研究画像 · 在线工具</p>
+        <p style="font-size: 0.9em; margin-top: 5px;">Doctor Research Profiling Tool powered by PubMed & doctor-discovery</p>
+    </footer>
+
+    <script>
+        // 搜索表单提交
+        document.getElementById('searchForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await performSearch();
+        });
+
+        async function performSearch() {
+            const name = document.getElementById('name').value.trim();
+            const affiliation = document.getElementById('affiliation').value.trim();
+            const offline = document.getElementById('offline').checked;
+            const max = parseInt(document.getElementById('max').value);
+
+            if (!name) {
+                showError('请输入医生名字');
+                return;
+            }
+
+            showLoading(true);
+            hideError();
+
+            try {
+                const response = await fetch('/api/search', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name,
+                        affiliation,
+                        offline,
+                        max
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    displayResults(data.data);
+                } else {
+                    showError(data.error);
+                }
+            } catch (error) {
+                showError('网络错误: ' + error.message);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function displayResults(data) {
+            document.getElementById('resultTitle').textContent = `📊 ${data.name} 的研究画像`;
+            document.getElementById('totalPapers').textContent = data.total_matched;
+            document.getElementById('clinicalPapers').textContent = data.clinical_papers;
+            document.getElementById('avgQuality').textContent = data.summary.average_quality.toFixed(1);
+            document.getElementById('confidence').textContent = (data.clinical_role_confidence * 100).toFixed(0) + '%';
+            document.getElementById('generatedTime').textContent = data.generated_at;
+
+            // 显示论文列表
+            const papersList = document.getElementById('papersList');
+            papersList.innerHTML = '';
+
+            if (data.papers && data.papers.length > 0) {
+                data.papers.forEach((paper, index) => {
+                    const qualityClass = paper.quality_score >= 70 ? 'quality-high' :
+                                       paper.quality_score >= 50 ? 'quality-medium' : 'quality-low';
+
+                    const authorBadge = paper.target_author_pos === 'first' ? '第一作者' :
+                                      paper.target_author_pos === 'last' ? '通讯/末位' : '合作者';
+
+                    const html = `
+                        <div class="paper-detail" onclick="toggleAbstract(${index})">
+                            <div style="display: flex; justify-content: space-between; align-items: start;">
+                                <div style="flex: 1;">
+                                    <div class="paper-title">${paper.title}</div>
+                                    <div class="paper-meta">
+                                        <span>📅 ${paper.year}</span>
+                                        <span>📚 ${paper.journal}</span>
+                                        <span class="badge badge-first">${authorBadge}</span>
+                                        <span class="badge quality-badge ${qualityClass}">质量分: ${paper.quality_score}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="paper-abstract" id="abstract-${index}">
+                                <strong>摘要：</strong><br>
+                                ${paper.abstract}
+                            </div>
+                        </div>
+                    `;
+                    papersList.innerHTML += html;
+                });
+            } else {
+                papersList.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">未找到相关论文</p>';
+            }
+
+            // 切换到结果显示
+            document.querySelector('.content').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function toggleAbstract(index) {
+            const el = document.getElementById(`abstract-${index}`);
+            if (el) {
+                el.classList.toggle('show');
+            }
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+            document.getElementById('searchBtn').disabled = show;
+        }
+
+        function showError(message) {
+            const el = document.getElementById('error');
+            el.textContent = message;
+            el.style.display = 'block';
+        }
+
+        function hideError() {
+            document.getElementById('error').style.display = 'none';
+        }
+
+        function backToSearch() {
+            document.querySelector('.content').style.display = 'grid';
+            document.getElementById('results').style.display = 'none';
+            window.scrollTo(0, 0);
+        }
+
+        function demoSearch() {
+            document.getElementById('name').value = 'Zhang Wei';
+            document.getElementById('affiliation').value = 'Shanghai Sixth People\'s Hospital';
+            document.getElementById('offline').checked = true;
+            performSearch();
+        }
+    </script>
+</body>
+</html>
