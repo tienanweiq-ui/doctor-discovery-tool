@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE">
+      <PMID Version="1">40000001</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <ISOAbbreviation>Lancet</ISOAbbreviation>
+          <Title>Lancet (London, England)</Title>
+          <JournalIssue><PubDate><Year>2023</Year></PubDate></JournalIssue>
+        </Journal>
+        <ArticleTitle>Efficacy of a novel antiviral regimen in chronic hepatitis B: a randomized controlled trial.</ArticleTitle>
+        <Abstract><AbstractText>In this multicenter randomized controlled trial, 820 patients with chronic hepatitis B were enrolled to evaluate clinical outcomes.</AbstractText></Abstract>
+        <AuthorList>
+          <Author>
+            <LastName>Zhang</LastName><ForeName>Wei</ForeName>
+            <AffiliationInfo><Affiliation>Department of Hepatology, Shanghai Sixth People's Hospital, Shanghai, China.</Affiliation></AffiliationInfo>
+          </Author>
+          <Author>
+            <LastName>Li</LastName><ForeName>Hua</ForeName>
+            <AffiliationInfo><Affiliation>Department of Infectious Diseases, Peking Union Medical College Hospital, Beijing, China.</Affiliation></AffiliationInfo>
+          </Author>
+        </AuthorList>
+        <PublicationTypeList>
+          <PublicationType UI="D016449">Randomized Controlled Trial</PublicationType>
+          <PublicationType UI="D016448">Multicenter Study</PublicationType>
+        </PublicationTypeList>
+        <ELocationID EIdType="doi">10.1016/example.2023.001</ELocationID>
+      </Article>
+      <MeshHeadingList>
+        <MeshHeading><DescriptorName UI="D006801">Humans</DescriptorName></MeshHeading>
+        <MeshHeading><DescriptorName UI="D006509">Hepatitis B, Chronic</DescriptorName></MeshHeading>
+        <MeshHeading><DescriptorName UI="D000998">Antiviral Agents</DescriptorName></MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+  </PubmedArticle>
+
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE">
+      <PMID Version="1">40000002</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <ISOAbbreviation>J Hepatol</ISOAbbreviation>
+          <Title>Journal of Hepatology</Title>
+          <JournalIssue><PubDate><Year>2021</Year></PubDate></JournalIssue>
+        </Journal>
+        <ArticleTitle>Long-term hepatocellular carcinoma risk in treated hepatitis B patients: a prospective cohort study.</ArticleTitle>
+        <Abstract><AbstractText>A prospective cohort of 3100 patients was followed for a median of 7 years to assess liver cancer incidence.</AbstractText></Abstract>
+        <AuthorList>
+          <Author>
+            <LastName>Chen</LastName><ForeName>Min</ForeName>
+            <AffiliationInfo><Affiliation>Department of Gastroenterology, Shanghai Sixth People's Hospital, Shanghai, China.</Affiliation></AffiliationInfo>
+          </Author>
+          <Author>
+            <LastName>Zhang</LastName><ForeName>Wei</ForeName>
+            <AffiliationInfo><Affiliation>Department of Hepatology, Shanghai Sixth People's Hospital, Shanghai, China.</Affiliation></AffiliationInfo>
+          </Author>
+        </AuthorList>
+        <PublicationTypeList>
+          <PublicationType UI="D023361">Observational Study</PublicationType>
+        </PublicationTypeList>
+        <ELocationID EIdType="doi">10.1016/example.2021.002</ELocationID>
+      </Article>
+      <MeshHeadingList>
+        <MeshHeading><DescriptorName UI="D006801">Humans</DescriptorName></MeshHeading>
+        <MeshHeading><DescriptorName UI="D006528">Carcinoma, Hepatocellular</DescriptorName></MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+  </PubmedArticle>
+
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE">
+      <PMID Version="1">40000003</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <ISOAbbreviation>Mol Cell Biol</ISOAbbreviation>
+          <Title>Molecular and Cellular Biology</Title>
+          <JournalIssue><PubDate><Year>2020</Year></PubDate></JournalIssue>
+        </Journal>
+        <ArticleTitle>Mechanism of viral replication in a murine cell line model.</ArticleTitle>
+        <Abstract><AbstractText>Using mouse hepatocyte cell lines, we explored the molecular mechanism of viral replication in vitro.</AbstractText></Abstract>
+        <AuthorList>
+          <Author>
+            <LastName>Zhang</LastName><ForeName>Wei</ForeName>
+            <AffiliationInfo><Affiliation>Department of Hepatology, Shanghai Sixth People's Hospital, Shanghai, China.</Affiliation></AffiliationInfo>
+          </Author>
+        </AuthorList>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+        <ELocationID EIdType="doi">10.1128/example.2020.003</ELocationID>
+      </Article>
+      <MeshHeadingList>
+        <MeshHeading><DescriptorName UI="D000818">Animals</DescriptorName></MeshHeading>
+        <MeshHeading><DescriptorName UI="D008810">Mice</DescriptorName></MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+  </PubmedArticle>
+
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE">
+      <PMID Version="1">40000004</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <ISOAbbreviation>Case Rep Med</ISOAbbreviation>
+          <Title>Case Reports in Medicine</Title>
+          <JournalIssue><PubDate><Year>2019</Year></PubDate></JournalIssue>
+        </Journal>
+        <ArticleTitle>A rare presentation of autoimmune hepatitis: a case report.</ArticleTitle>
+        <Abstract><AbstractText>We report a single case of an unusual clinical presentation in a 45-year-old patient.</AbstractText></Abstract>
+        <AuthorList>
+          <Author>
+            <LastName>Zhang</LastName><ForeName>Wei</ForeName>
+            <AffiliationInfo><Affiliation>Department of Hepatology, Shanghai Sixth People's Hospital, Shanghai, China.</Affiliation></AffiliationInfo>
+          </Author>
+        </AuthorList>
+        <PublicationTypeList>
+          <PublicationType UI="D002363">Case Reports</PublicationType>
+        </PublicationTypeList>
+        <ELocationID EIdType="doi">10.1155/example.2019.004</ELocationID>
+      </Article>
+      <MeshHeadingList>
+        <MeshHeading><DescriptorName UI="D006801">Humans</DescriptorName></MeshHeading>
+        <MeshHeading><DescriptorName UI="D058625">Hepatitis, Autoimmune</DescriptorName></MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+  </PubmedArticle>
+
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE">
+      <PMID Version="1">40000005</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <ISOAbbreviation>Predatory J Med</ISOAbbreviation>
+          <Title>Predatory Journal of Medicine</Title>
+          <JournalIssue><PubDate><Year>2022</Year></PubDate></JournalIssue>
+        </Journal>
+        <ArticleTitle>Questionable findings later retracted.</ArticleTitle>
+        <Abstract><AbstractText>This study reported clinical outcomes that were subsequently retracted.</AbstractText></Abstract>
+        <AuthorList>
+          <Author>
+            <LastName>Zhang</LastName><ForeName>Wei</ForeName>
+            <AffiliationInfo><Affiliation>Department of Hepatology, Shanghai Sixth People's Hospital, Shanghai, China.</Affiliation></AffiliationInfo>
+          </Author>
+        </AuthorList>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+          <PublicationType UI="D016441">Retracted Publication</PublicationType>
+        </PublicationTypeList>
+        <ELocationID EIdType="doi">10.0000/example.2022.005</ELocationID>
+      </Article>
+      <MeshHeadingList>
+        <MeshHeading><DescriptorName UI="D006801">Humans</DescriptorName></MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+  </PubmedArticle>
+</PubmedArticleSet>
