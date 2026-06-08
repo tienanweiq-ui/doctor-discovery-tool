@@ -5,31 +5,63 @@ Vercel Serverless Entry Point
 """
 import sys
 import os
+import traceback
 
 # 获取项目根目录
 root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, root_dir)
 
-# 导入 Flask 应用
+# 创建基础 Flask 应用
+from flask import Flask, jsonify, render_template, request
+from flask_cors import CORS
+
+app = Flask(__name__, template_folder=os.path.join(root_dir, 'templates'))
+CORS(app)
+
+error_message = None
+
+# 尝试导入 doctor_discovery 模块
 try:
-    # 首先尝试设置正确的工作目录
     os.chdir(root_dir)
-
-    # 然后导入应用
-    from app import app
-
+    from doctor_discovery import pubmed_client, parse, classify, quality, identity, profile
+    modules_loaded = True
 except Exception as e:
-    # 如果导入失败，创建一个简单的错误应用
-    from flask import Flask, jsonify
-    app = Flask(__name__)
+    modules_loaded = False
+    error_message = f"Failed to load doctor_discovery: {str(e)}\n\n{traceback.format_exc()}"
+    print(error_message)
 
-    @app.route('/')
-    def error():
+# 定义路由
+@app.route('/')
+def index():
+    """主页"""
+    try:
+        return render_template('index.html')
+    except Exception as e:
+        return jsonify({'error': f'Failed to load template: {str(e)}'}), 500
+
+@app.route('/api/health')
+def health():
+    """健康检查"""
+    return jsonify({
+        'status': 'ok',
+        'modules_loaded': modules_loaded,
+        'error': error_message
+    })
+
+@app.route('/api/search', methods=['POST'])
+def search_doctor():
+    """搜索医生"""
+    if not modules_loaded:
         return jsonify({
-            'error': f'Failed to import app: {str(e)}',
-            'root_dir': root_dir,
-            'sys_path': sys.path[:3]
+            'success': False,
+            'error': 'Modules not loaded. See /api/health for details.'
         }), 500
+
+    # 这里放原来的搜索逻辑
+    return jsonify({
+        'success': False,
+        'error': 'Not implemented yet'
+    }), 501
 
 # Vercel 需要导出应用
 __all__ = ['app']
