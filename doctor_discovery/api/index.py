@@ -6,10 +6,30 @@ Vercel Serverless Entry Point
 import sys
 import os
 
-# 添加项目根目录到 Python 路径
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# 获取项目根目录
+root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, root_dir)
 
-from app import app
+# 导入 Flask 应用
+try:
+    # 首先尝试设置正确的工作目录
+    os.chdir(root_dir)
+
+    # 然后导入应用
+    from app import app
+
+except Exception as e:
+    # 如果导入失败，创建一个简单的错误应用
+    from flask import Flask, jsonify
+    app = Flask(__name__)
+
+    @app.route('/')
+    def error():
+        return jsonify({
+            'error': f'Failed to import app: {str(e)}',
+            'root_dir': root_dir,
+            'sys_path': sys.path[:3]
+        }), 500
 
 # Vercel 需要导出应用
 __all__ = ['app']
